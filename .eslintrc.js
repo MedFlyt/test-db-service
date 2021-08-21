@@ -1,0 +1,52 @@
+module.exports = {
+    root: true,
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        tsconfigRootDir: __dirname + "/src",
+        project: ['./tsconfig.json'],
+        ecmaVersion: 6,
+        sourceType: "module",
+    },
+    plugins: [
+        '@typescript-eslint',
+        'simple-import-sort'
+    ],
+    extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended'
+    ],
+    rules: {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/camelcase": "off",
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/class-name-casing": "off",
+        "no-restricted-syntax": ["error", { selector: "OptionalMemberExpression", message: "Optional Chaining not allowed" }],
+        "require-atomic-updates": "error",
+        "quotes": ["error", "double", { avoidEscape: true, allowTemplateLiterals: true }],
+        "semi": ["error", "always"],
+        "no-constant-condition": ["error", { checkLoops: false }],
+        "comma-dangle": ["error", "never"],
+        "simple-import-sort/imports": "error",
+        "no-trailing-spaces": "error",
+        "default-case": "error",
+        "eqeqeq": "error",
+        "no-return-assign": ["error", "always"],
+        "@typescript-eslint/no-unnecessary-condition": ["error", { allowConstantLoopConditions: true }],
+        "@typescript-eslint/adjacent-overload-signatures": "error",
+        "@typescript-eslint/strict-boolean-expressions": "error",
+        "@typescript-eslint/explicit-function-return-type": ["error", { allowExpressions: true }],
+        "@typescript-eslint/prefer-for-of": "error",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-expressions": "error",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-floating-promises": ["error", { ignoreVoid: true }],
+        "@typescript-eslint/return-await": ["error", "always"],
+        "@typescript-eslint/consistent-type-assertions": ["error", { assertionStyle: "as", objectLiteralTypeAssertions: "never" }],
+    }
+};

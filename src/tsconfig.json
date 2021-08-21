@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "outDir": "../build",
+        "sourceMap": true,
+        "inlineSources": true,
+        "target": "ES2017",
+        "module": "CommonJS",
+        "moduleResolution": "node"
+    }
+}
