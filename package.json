@@ -1,6 +1,6 @@
 {
   "name": "test-db-service",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Developer tool to instantly provision test PostgreSQL databases from a template",
   "main": "index.js",
   "bin": "./test-db-service.js",
