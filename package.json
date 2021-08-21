@@ -6,6 +6,7 @@
   "bin": "./test-db-service.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --project src",
     "start": "node -r source-map-support/register test-db-service.js",
     "eslint": "eslint src --ext .ts"
   },
