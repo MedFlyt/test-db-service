@@ -87,6 +87,22 @@ export async function startHttpServer(serverName: string): Promise<void> {
             };
         });
 
+        POST(serverName, app, "/database/release", async (query): Promise<HttpResponse> => {
+            const url = query["url"];
+            const hash = query["hash"];
+            if (url === undefined) {
+                return { status: 400, body: { error: `Required query param: "url"` } };
+            }
+            if (hash === undefined) {
+                return { status: 400, body: { error: `Required query param: "hash"` } };
+            }
+            await temporaryDatabaseService.releaseDatabase(url, hash);
+            return {
+                status: 204,
+                body: {}
+            };
+        });
+
         POST(serverName, app, "/shutdown", async (query): Promise<HttpResponse> => {
             shutdown();
             return {

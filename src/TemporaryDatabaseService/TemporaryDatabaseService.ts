@@ -6,7 +6,7 @@ import { assertNever } from "../../node_modules/assert-never/index";
 import { AsyncTrigger } from "../ConcurrencyUtils.ts/AsyncTrigger";
 import { performanceMeasure } from "../Debug/performance_timing";
 import { withConnectPg } from "../pg_extra";
-import { PostgresClusterCollection } from "../PostgresClusterUtils/PostgresClusterCollection";
+import { PostgresCluster, PostgresClusterCollection } from "../PostgresClusterUtils/PostgresClusterCollection";
 import { DatabaseTemplateHash, DatabaseTemplateMap } from "./DatabaseTemplateMap";
 
 export type PostgresUrl = string;
@@ -231,12 +231,13 @@ export class TemporaryDatabaseService {
     async dropDatabase(url: PostgresUrl): Promise<void> {
         const p = parse(url);
         const database = p.database;
-        if (typeof database !== "string") {
+        if (database === null || database === undefined) {
             return;
         }
 
-        for (const cluster of await this.postgresClusterCollection.getPostgresClusterUrls()) {
-            if (parse(cluster.url).port === p.port) {
+        if (p.port !== null && p.port !== undefined) {
+            const cluster = await getDatabaseClusterOnPort(this.postgresClusterCollection, p.port);
+            if (cluster !== null) {
                 await performanceMeasure(`drop database "${database}"`, async () => {
                     await withConnectPg(cluster.url, async (client) => {
                         await dropDatabase(client, database);
@@ -259,7 +260,28 @@ export class TemporaryDatabaseService {
      * Note: You must be disconnected from the database before you call this
      */
     async releaseDatabase(url: PostgresUrl, hash: DatabaseTemplateHash): Promise<void> {
+        const p = parse(url);
+        if (p.database === null || p.database === undefined) {
+            return;
+        }
 
+        if (p.port !== null && p.port !== undefined) {
+            const cluster = await getDatabaseClusterOnPort(this.postgresClusterCollection, p.port);
+            if (cluster !== null) {
+                const instance = this.templates.get(cluster.postgresVersion, hash);
+                if (instance !== undefined) {
+                    if (instance.type === "TemplateReady") {
+                        instance.readyClones.push(p.database);
+                        this.asyncTrigger.triggerChange();
+                        return;
+                    }
+                }
+            }
+        }
+
+        // If we get to this point, then it means that there was a problem
+        // releasing the database back into the pool, so we just drop it
+        await this.dropDatabase(url);
     }
 
     async close(): Promise<void> {
@@ -409,6 +431,16 @@ function getNeediestTemplate(templates: DatabaseTemplateMap<DatabaseTemplateStat
         }
     }
     return result;
+}
+
+async function getDatabaseClusterOnPort(postgresClusterCollection: PostgresClusterCollection, port: string): Promise<PostgresCluster | null> {
+    for (const cluster of await postgresClusterCollection.getPostgresClusterUrls()) {
+        if (parse(cluster.url).port === port) {
+            return cluster;
+        }
+    }
+
+    return null;
 }
 
 async function newCommitToken(): Promise<string> {
