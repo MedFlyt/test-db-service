@@ -1,8 +1,8 @@
+import { assertNever } from "assert-never";
 import * as crypto from "crypto";
 import * as pg from "pg";
 import { parse } from "pg-connection-string";
 
-import { assertNever } from "../../node_modules/assert-never/index";
 import { AsyncTrigger } from "../ConcurrencyUtils.ts/AsyncTrigger";
 import { performanceMeasure } from "../Debug/performance_timing";
 import { withConnectPg } from "../pg_extra";
