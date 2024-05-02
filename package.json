@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --project src",
     "start": "node -r source-map-support/register test-db-service.js",
-    "eslint": "eslint src --ext .ts"
+    "eslint": "eslint src --ext .ts",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -56,6 +57,7 @@
     "@typescript-eslint/parser": "4.29.2",
     "eslint": "7.32.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
+    "patch-package": "8.0.0",
     "typescript": "4.2.4"
   }
 }
