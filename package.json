@@ -42,7 +42,7 @@
     "request": "2.88.2",
     "rimraf": "3.0.2",
     "source-map-support": "0.5.19",
-    "tar": "6.1.0"
+    "tar": "6.2.1"
   },
   "devDependencies": {
     "@types/adm-zip": "0.4.34",
