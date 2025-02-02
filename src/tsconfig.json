@@ -6,6 +6,7 @@
         "inlineSources": true,
         "target": "ES2017",
         "module": "CommonJS",
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "skipLibCheck": true
     }
 }
