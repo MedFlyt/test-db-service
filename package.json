@@ -1,6 +1,6 @@
 {
   "name": "@medflyt/test-db-service",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Developer tool to instantly provision test PostgreSQL databases from a template",
   "main": "index.js",
   "bin": "./test-db-service.js",
