@@ -41,8 +41,7 @@
     "promisify-child-process": "4.1.1",
     "request": "2.88.2",
     "rimraf": "3.0.2",
-    "source-map-support": "0.5.19",
-    "tar": "6.1.0"
+    "source-map-support": "0.5.19"
   },
   "devDependencies": {
     "@types/adm-zip": "0.4.34",
@@ -51,7 +50,6 @@
     "@types/pg": "8.6.0",
     "@types/request": "2.48.5",
     "@types/rimraf": "3.0.0",
-    "@types/tar": "6.1.13",
     "@typescript-eslint/eslint-plugin": "4.29.2",
     "@typescript-eslint/parser": "4.29.2",
     "eslint": "7.32.0",

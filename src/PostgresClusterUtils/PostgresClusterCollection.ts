@@ -1,4 +1,3 @@
-import { readPostgresVersion } from "../launch_postgres";
 import { PostgresClusterInstance } from "./PostgresClusterInstance";
 
 /**
@@ -10,16 +9,11 @@ export class PostgresClusterCollection {
     }
 
     async getPostgresUrl(postgresVersion: string): Promise<string> {
-        const pgVersion = readPostgresVersion(postgresVersion);
-        if (pgVersion === null) {
-            throw new Error(`Invalid PostgreSQL version: "${postgresVersion}"`);
-        }
-
         const existing = this.clusters.get(postgresVersion);
         if (existing !== undefined) {
             return await existing.getPostgresUrl();
         } else {
-            const newCluster = new PostgresClusterInstance(pgVersion);
+            const newCluster = new PostgresClusterInstance(postgresVersion);
             this.clusters.set(postgresVersion, newCluster);
             return await newCluster.getPostgresUrl();
         }

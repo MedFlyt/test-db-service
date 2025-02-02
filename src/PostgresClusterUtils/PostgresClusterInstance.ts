@@ -1,6 +1,6 @@
 import { assertNever } from "assert-never";
 
-import { PostgresServer, PostgresVersion } from "../launch_postgres";
+import { PostgresServer } from "../launch_postgres";
 
 /**
  * Creates and launches a new blank PostgreSQL database cluster.
@@ -13,7 +13,7 @@ export class PostgresClusterInstance {
      * @param postgresVersion The version number of PostgreSQL that should be
      * used. Example: `10.10`
      */
-    constructor(postgresVersion: PostgresVersion) {
+    constructor(postgresVersion: string) {
         this.postgresVersion = postgresVersion;
         this.status = { type: "Starting" };
 
@@ -62,7 +62,7 @@ export class PostgresClusterInstance {
         }
     }
 
-    private readonly postgresVersion: PostgresVersion;
+    private readonly postgresVersion: string;
     private status: Status;
 
     private serverReadyCallbacks: ((server: PostgresServer) => void)[] = [];
